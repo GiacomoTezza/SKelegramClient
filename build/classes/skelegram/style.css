@@ -1,0 +1,10 @@
+.ScrollPane {
+    -fx-background-color:#333333;
+}
+
+.label{
+  -fx-background-color:blue;
+  -fx-text-fill:white;
+  -fx-pref-height:20px;
+  -fx-pref-width:320px;
+  }
