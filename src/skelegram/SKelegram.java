@@ -23,7 +23,6 @@ public class SKelegram extends Application {
     private static ArrayList<Label> messages;
     private static FXMLrootController rootController;
     private static Client client;
-    private static String payload;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -49,14 +48,20 @@ public class SKelegram extends Application {
         Task task = new Task() {
             @Override public Void call() {
                 while (true) {
-                    SKelegram.payload = SKelegram.getClient().receive();
-                    if (SKelegram.payload != "") {
-                        SKelegram.addMessage(SKelegram.payload);
+                    String payload = SKelegram.getClient().receive();
+                    if (payload != "") {
+                        System.out.println(payload);
+                        System.out.println("adding:"+payload);
+                        SKelegram.addMessage("adding");
+                        SKelegram.addMessage(payload);
+                        System.out.println("added");
                     }
                 }
             }
         };
-        new Thread(task).start();
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     /**
