@@ -50,11 +50,7 @@ public class SKelegram extends Application {
                 while (true) {
                     String payload = SKelegram.getClient().receive();
                     if (payload != "") {
-                        System.out.println(payload);
-                        System.out.println("adding:"+payload);
-                        SKelegram.addMessage("adding");
                         SKelegram.addMessage(payload);
-                        System.out.println("added");
                     }
                 }
             }

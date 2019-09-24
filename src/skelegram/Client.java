@@ -60,7 +60,6 @@ public class Client{
             if (input.ready()){
                 k = input.readLine();
                 System.out.println(k);
-                k = k.substring(k.length()-"&(end)&".length());
             }
         } catch (IOException ex) {
             System.out.println(ex);

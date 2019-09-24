@@ -34,8 +34,8 @@ public class FXMLrootController implements Initializable {
     void handleTextField(KeyEvent event) throws IOException {
         if (event.getCode() == ENTER) {
             nick = SKelegram.getNickname();
-            msg = input.getText();
-            input.setText("");
+            msg = getInput().getText();
+            getInput().setText("");
             payload = nick + ": " + msg + "\n&(end)&";
             pLenght = payload.length();
             SKelegram.getClient().send(payload);
@@ -43,15 +43,19 @@ public class FXMLrootController implements Initializable {
     }
     
     public void update() {
-        if (msgbox.getChildren().size() >= 50) {
-            for (int j = 0; j <= msgbox.getChildren().size() - 50; j++) {
-                msgbox.getChildren().remove(msgbox.getChildren().get(0));
+        if (getMsgbox().getChildren().size() >= 50) {
+            for (int j = 0; j <= getMsgbox().getChildren().size() - 50; j++) {
+                getMsgbox().getChildren().remove(getMsgbox().getChildren().get(0));
             }
         }
-        msgbox.getChildren().clear();
-        for (Label label : SKelegram.getMessages()) {
-            msgbox.getChildren().add(label);
-            SKelegram.getMessages().remove(label);
+        System.out.println("INIZIO");
+        getMsgbox().getChildren().clear();
+        System.out.println("PULITO");
+        for (int i = 0; i < SKelegram.getMessages().size(); i++) {
+            System.out.println("AGGIUNGO " + i);
+            getMsgbox().getChildren().add(SKelegram.getMessages().get(i));
+            System.out.println("AGGIUNTO " + i);
+//            SKelegram.getMessages().remove(SKelegram.getMessages().get(i));
         }
     }
     
@@ -59,5 +63,19 @@ public class FXMLrootController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         SKelegram.setController(this);
     }    
+
+    /**
+     * @return the msgbox
+     */
+    public VBox getMsgbox() {
+        return msgbox;
+    }
+
+    /**
+     * @return the input
+     */
+    public TextField getInput() {
+        return input;
+    }
     
 }
