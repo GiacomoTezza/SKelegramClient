@@ -1,7 +1,5 @@
 package skelegram;
 
-import com.sun.org.apache.bcel.internal.classfile.Utility;
-import static com.sun.org.apache.bcel.internal.classfile.Utility.replace;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,7 +8,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.Label;
 
 /**
  *
@@ -44,7 +41,6 @@ public class Client extends Thread{
         while (true) {
             String payload = receive();
             SKelegram.addMessage(payload);
-            //SKelegram.getRootController().update();
         }
     }
     
@@ -80,7 +76,7 @@ public class Client extends Thread{
             System.out.println(ex);
             close();
         }
-        k = k.replace("&(end)&", "");
+        k = k.substring(k.length()-"&(end)&".length());
         return k;
     }
     

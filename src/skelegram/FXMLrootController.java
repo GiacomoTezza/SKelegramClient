@@ -25,8 +25,6 @@ public class FXMLrootController implements Initializable {
     ArrayList messages;
     int index;
     
-    Client client;
-    
     @FXML
     private TextField input;
     
@@ -41,7 +39,7 @@ public class FXMLrootController implements Initializable {
             input.setText("");
             payload = nick + ": " + msg + "\n&(end)&";
             pLenght = payload.length();
-            client.send(payload);
+            SKelegram.getClient().send(payload);
         }
     }
     
@@ -65,10 +63,6 @@ public class FXMLrootController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SKelegram.setController(this);
-        client = new Client("93.39.191.67", 45678);
-        client.setDaemon(true);
-        client.start();
-        SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
     }    
     
 }

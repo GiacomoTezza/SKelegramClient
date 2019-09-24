@@ -19,6 +19,7 @@ public class SKelegram extends Application {
     private static String nickname;
     private static ArrayList<Label> messages;
     private static FXMLrootController rootController;
+    private static Client client;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -35,6 +36,12 @@ public class SKelegram extends Application {
         stage.setScene(openScene);
         stage.show();
         SKelegram.stage.setResizable(false);
+        
+//        SKelegram.client = new Client("93.39.191.67", 45678);
+        SKelegram.client = new Client("127.0.0.1", 45678);
+        SKelegram.getClient().setDaemon(true);
+        SKelegram.getClient().start();
+        SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
     }
 
     /**
@@ -49,6 +56,7 @@ public class SKelegram extends Application {
             SKelegram.getMessages().remove(0);
         }
         SKelegram.getMessages().add(new Label(payload));
+        SKelegram.getRootController().update();
     }
     
     /**
@@ -93,4 +101,8 @@ public class SKelegram extends Application {
     public static FXMLrootController getRootController() {
         return rootController;
     }
+
+	public static Client getClient() {
+		return client;
+	}
 }
