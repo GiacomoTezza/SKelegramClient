@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,6 +23,7 @@ public class SKelegram extends Application {
     private static ArrayList<Label> messages;
     private static FXMLrootController rootController;
     private static Client client;
+    private static String payload;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -39,24 +41,27 @@ public class SKelegram extends Application {
         stage.setTitle("SKelegram");
         stage.show();
         SKelegram.stage.setResizable(false);
-        SKelegram.client = new Client("93.39.191.67", 45678);
-//        SKelegram.client = new Client("127.0.0.1", 45678);
-        SKelegram.getClient().setDaemon(true);
+        SKelegram.client = new Client("93.39.191.67", 45678);  
         
-//        Platform.runLater(SKelegram.getClient());
-//        
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
-//                SKelegram.getClient().connect();
-//                while (true) {
-//                    String payload = SKelegram.getClient().receive();
-//                    System.out.println(payload);
-//                    SKelegram.addMessage(payload);
-//                }
-//            }
-//        });
+        SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
+        SKelegram.getClient().connect();
+        
+        while (true) {
+            SKelegram.payload = SKelegram.getClient().receive();
+            
+            Task task = new Task<Void>() {
+                @Override public Void call() {
+                    if (SKelegram.payload != "") {
+                        SKelegram.addMessage(SKelegram.payload);
+                    }
+                    return null;
+                }
+            };
+            new Thread(task).start();
+        }
+        
+        
+        
     }
 
     /**

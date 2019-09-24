@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author Tezza Giacomo
  */
-public class Client extends Thread{
+public class Client{
     private String host;
     private int port;
     
@@ -31,22 +31,6 @@ public class Client extends Thread{
         this.host = host;
         this.port = port;
         this.messages = new ArrayList<>();
-    }
-    
-    @Override
-    public void run() {
-        SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
-        connect();
-        
-//        for (int i = 0; i < 60; i++) {
-//            SKelegram.addMessage(i + "Messaggino\n");
-//        }
-        
-        while (true) {
-            String payload = receive();
-            System.out.println(payload);
-            SKelegram.addMessage(payload);
-        }
     }
     
     public void connect(){
@@ -73,15 +57,15 @@ public class Client extends Thread{
         String k = "";
         
         try {
-            while (!input.ready()){
+            if (input.ready()){
+                k = input.readLine();
+                System.out.println(k);
+                k = k.substring(k.length()-"&(end)&".length());
             }
-            k = input.readLine();
-            System.out.println(k);
         } catch (IOException ex) {
             System.out.println(ex);
             close();
         }
-        k = k.substring(k.length()-"&(end)&".length());
         return k;
     }
     
