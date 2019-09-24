@@ -23,7 +23,6 @@ public class FXMLrootController implements Initializable {
     String payload;
     int pLenght;
     ArrayList messages;
-    int index;
     
     @FXML
     private TextField input;
@@ -44,20 +43,16 @@ public class FXMLrootController implements Initializable {
     }
     
     public void update() {
-        msgbox.getChildren().add(SKelegram.getMessages().get(index));
-        index++;
-//        for (Label l : SKelegram.getMessages()) {
-//            msgbox.getChildren().add(l);
-//        }
-        
-//        for (Label lb1 : SKelegram.getMessages()) {
-//            for (Label lb2 : msgbox.getChildren()) {
-//                if (lb1.getText() != lb2.getText()) {
-//                    msgbox.getChildren().add(lb1);
-//                    SKelegram.getMessages().remove(lb1);
-//                }
-//            }
-//        }
+        if (msgbox.getChildren().size() >= 50) {
+            for (int j = 0; j <= msgbox.getChildren().size() - 50; j++) {
+                msgbox.getChildren().remove(msgbox.getChildren().get(0));
+            }
+        }
+        for (int i = 0; i < SKelegram.getMessages().size(); i++) {
+            msgbox.getChildren().add(SKelegram.getMessages().get(i));
+            SKelegram.getMessages().remove(i);
+        }
+
     }
     
     @Override

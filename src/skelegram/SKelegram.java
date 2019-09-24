@@ -1,7 +1,9 @@
 package skelegram;
 
+import java.io.File;
 import java.util.ArrayList;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,16 +34,29 @@ public class SKelegram extends Application {
         rootScene = new Scene(rootFXML);
         openScene = new Scene(openFXML);
         
-        //rootScene.getStylesheets().add(".\\style.css");
+//        rootScene.getStylesheets().add(new File("style.css").get);
         stage.setScene(openScene);
+        stage.setTitle("SKelegram");
         stage.show();
         SKelegram.stage.setResizable(false);
-        
-//        SKelegram.client = new Client("93.39.191.67", 45678);
-        SKelegram.client = new Client("127.0.0.1", 45678);
+        SKelegram.client = new Client("93.39.191.67", 45678);
+//        SKelegram.client = new Client("127.0.0.1", 45678);
         SKelegram.getClient().setDaemon(true);
-        SKelegram.getClient().start();
-        SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
+        
+//        Platform.runLater(SKelegram.getClient());
+//        
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
+//                SKelegram.getClient().connect();
+//                while (true) {
+//                    String payload = SKelegram.getClient().receive();
+//                    System.out.println(payload);
+//                    SKelegram.addMessage(payload);
+//                }
+//            }
+//        });
     }
 
     /**
@@ -52,9 +67,6 @@ public class SKelegram extends Application {
     }
     
     public static void addMessage(String payload) {
-        if (SKelegram.getMessages().size() >= 15) {
-            SKelegram.getMessages().remove(0);
-        }
         SKelegram.getMessages().add(new Label(payload));
         SKelegram.getRootController().update();
     }

@@ -35,11 +35,16 @@ public class Client extends Thread{
     
     @Override
     public void run() {
-        System.out.println("Ciao dal tuo thread di quartiere");
+        SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
         connect();
+        
+//        for (int i = 0; i < 60; i++) {
+//            SKelegram.addMessage(i + "Messaggino\n");
+//        }
         
         while (true) {
             String payload = receive();
+            System.out.println(payload);
             SKelegram.addMessage(payload);
         }
     }
