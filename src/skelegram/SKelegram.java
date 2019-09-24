@@ -46,22 +46,17 @@ public class SKelegram extends Application {
         SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
         SKelegram.getClient().connect();
         
-        while (true) {
-            SKelegram.payload = SKelegram.getClient().receive();
-            
-            Task task = new Task<Void>() {
-                @Override public Void call() {
+        Task task = new Task() {
+            @Override public Void call() {
+                while (true) {
+                    SKelegram.payload = SKelegram.getClient().receive();
                     if (SKelegram.payload != "") {
                         SKelegram.addMessage(SKelegram.payload);
                     }
-                    return null;
                 }
-            };
-            new Thread(task).start();
-        }
-        
-        
-        
+            }
+        };
+        new Thread(task).start();
     }
 
     /**
