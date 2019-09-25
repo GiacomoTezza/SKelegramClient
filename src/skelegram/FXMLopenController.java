@@ -34,6 +34,7 @@ public class FXMLopenController implements Initializable {
     
     void showError() {
         errorlabel.setVisible(true);
+        nickInput.setVisible(false);
     }
     
     @Override
