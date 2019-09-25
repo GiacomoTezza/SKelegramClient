@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import static javafx.scene.input.KeyCode.ENTER;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +19,9 @@ public class FXMLopenController implements Initializable {
 
     @FXML
     private TextField nickInput;
+    
+    @FXML
+    private Label errorlabel;
 
     @FXML
     void handleTextField(KeyEvent event) {
@@ -28,9 +32,14 @@ public class FXMLopenController implements Initializable {
         }
     }
     
+    void showError() {
+        errorlabel.setVisible(true);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        SKelegram.setOpenController(this);
+        errorlabel.setVisible(false);
+    }
     
 }

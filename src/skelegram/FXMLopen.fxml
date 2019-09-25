@@ -7,25 +7,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="600.0" prefWidth="320" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skelegram.FXMLopenController">
+<AnchorPane id="OpenPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="600.0" prefWidth="320" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skelegram.FXMLopenController">
    <children>
       <TextField fx:id="nickInput" layoutX="31.0" layoutY="561.0" onKeyPressed="#handleTextField" prefHeight="25.0" prefWidth="259.0" promptText="Insert your nickname:" />
-      <Label layoutX="63.0" layoutY="50.0" text="SKelegram">
+      <Label id="Title" layoutX="63.0" layoutY="50.0" text="SKelegram">
          <font>
             <Font name="Monospaced Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="80.0" layoutY="94.0" text="Texting with socket">
+      <Label id="Subtitle" layoutX="80.0" layoutY="94.0" text="Texting with socket">
          <font>
             <Font name="Monospaced Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="134.0" layoutY="521.0" text="Authors:">
+      <Label id="Authors" layoutX="134.0" layoutY="521.0" text="Authors:">
          <font>
             <Font name="Monospaced Bold" size="11.0" />
          </font>
       </Label>
-      <Label layoutX="61.0" layoutY="536.0" text="Bonoldi Enrico - Tezza Giacomo">
+      <Label id="Authors" layoutX="61.0" layoutY="536.0" text="Bonoldi Enrico - Tezza Giacomo">
          <font>
             <Font name="Monospaced Bold" size="11.0" />
          </font>
@@ -40,5 +40,10 @@
             <Image url="@media/SKelegram.png" />
          </image>
       </ImageView>
+      <Label fx:id="errorlabel" layoutX="24.0" layoutY="463.0" text="ERROR CONNECTING - CLOSE AND TRY AGAIN" textFill="RED" underline="true">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

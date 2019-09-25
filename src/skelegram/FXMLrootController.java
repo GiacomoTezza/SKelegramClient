@@ -64,14 +64,21 @@ public class FXMLrootController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         SKelegram.setController(this);
         this.messages = new ArrayList<>();
-        messages.add(new Label("Welcome to SKelegram chatroom:\n"));
         
         Task task = new Task() {
             @Override public Void call() {
+                Label welcome = new Label("Welcome to SKelegram chatroom:\n");
+                welcome.setWrapText(true);
+                welcome.setId("Message");
+                messages.add(welcome);
+                update();
                 while (true) {
                     String payload = SKelegram.getClient().receive();
                     if (!"".equals(payload)) {
-                        messages.add(new Label(payload));
+                        Label msg = new Label(payload);
+                        msg.setWrapText(true);
+                        msg.setId("Message");
+                        messages.add(msg);
                         update();
                     }
                 }
