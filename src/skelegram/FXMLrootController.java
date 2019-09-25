@@ -3,6 +3,7 @@ package skelegram;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -23,7 +24,7 @@ public class FXMLrootController implements Initializable {
     String msg;
     String payload;
     int pLenght;
-    ArrayList<Label> messages;
+    ArrayList<String> messages;
     
     @FXML
     private TextField input;
@@ -44,15 +45,22 @@ public class FXMLrootController implements Initializable {
     }
     
     public void update() {
-        if (getMsgbox().getChildren().size() >= 50) {
-            for (int j = 0; j <= getMsgbox().getChildren().size() - 50; j++) {
-                getMsgbox().getChildren().remove(getMsgbox().getChildren().get(0));
+        System.out.println("Update-Start");
+        if (this.messages.size() >= 50) {
+            System.out.println("Overflow");
+            for (int j = 0; j <= this.messages.size() - 50; j++) {
+                this.messages.remove(this.messages.get(0));
+                System.out.println("Deleted");
             }
         }
         getMsgbox().getChildren().clear();
-        for (int i = 0; i < messages.size(); i++) {
-            getMsgbox().getChildren().add(messages.get(i));
+        for (String message : this.messages) {
+            Label labelmsg = new Label(message);
+            labelmsg.setWrapText(true);
+            labelmsg.setId("Message");
+            getMsgbox().getChildren().add(labelmsg);
         }
+        System.out.println("Update-end\n\n");
     }
     
     @Override
@@ -61,20 +69,21 @@ public class FXMLrootController implements Initializable {
         this.messages = new ArrayList<>();
         
         Task task = new Task() {
+            
             @Override public Void call() {
-                Label welcome = new Label("Welcome to SKelegram chatroom:\n");
-                welcome.setWrapText(true);
-                welcome.setId("Message");
-                messages.add(welcome);
+                messages.add("Welcome to SKelegram chatroom:\n");
                 update();
+                
                 while (true) {
+                    System.out.println("ricevo..");
                     String payload = SKelegram.getClient().receive();
-                    if (!"".equals(payload)) {
-                        Label msg = new Label(payload);
-                        msg.setWrapText(true);
-                        msg.setId("Message");
-                        messages.add(msg);
+                    if (payload != "") {
+                        System.out.println("Arrivato: " + payload);
+                        messages.add(payload);
                         update();
+                        System.out.println("Updatato");
+                    } else {
+                        System.out.println("NIENTE DI FATTO");
                     }
                 }
             }

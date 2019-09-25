@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import static javafx.scene.input.KeyCode.ENTER;
 import javafx.scene.input.KeyEvent;
 
@@ -22,6 +24,9 @@ public class FXMLopenController implements Initializable {
     
     @FXML
     private Label errorlabel;
+    
+    @FXML
+    private ImageView image;
 
     @FXML
     void handleTextField(KeyEvent event) {
@@ -35,6 +40,7 @@ public class FXMLopenController implements Initializable {
     void showError() {
         errorlabel.setVisible(true);
         nickInput.setVisible(false);
+        image.setImage(new Image(getClass().getResourceAsStream("media/offline.png")));
     }
     
     @Override

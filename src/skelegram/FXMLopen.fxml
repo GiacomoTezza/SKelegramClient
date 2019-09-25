@@ -35,7 +35,7 @@
             <Image url="@media/connection.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="190.0" fitWidth="210.0" layoutX="65.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image" fitHeight="190.0" fitWidth="210.0" layoutX="65.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@media/SKelegram.png" />
          </image>

@@ -17,8 +17,6 @@ public class Client{
     private String host;
     private int port;
     
-    private ArrayList<String> messages;
-    
     private Socket clientSocket;
     private DataOutputStream output;
     private BufferedReader input;
@@ -38,7 +36,6 @@ public class Client{
     public Client(String host, int port) {
         this.host = host;
         this.port = port;
-        this.messages = new ArrayList<>();
     }
     
     /**
@@ -81,7 +78,6 @@ public class Client{
         try {
             if (input.ready()){
                 k = input.readLine();
-                System.out.println(k);
             }
         } catch (IOException ex) {
             System.out.println(ex);
@@ -127,12 +123,5 @@ public class Client{
      */
     public void setPort(int port) {
         this.port = port;
-    }
-
-    /**
-     * @return the messages
-     */
-    public ArrayList<String> getMessages() {
-        return messages;
     }
 }

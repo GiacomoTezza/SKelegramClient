@@ -27,6 +27,8 @@ public class SKelegram extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        SKelegram.client = new Client("93.39.191.67", 45678);
+        
         SKelegram.stage = stage;
         
         Parent rootFXML = FXMLLoader.load(getClass().getResource("FXMLroot.fxml"));
@@ -44,7 +46,6 @@ public class SKelegram extends Application {
         
         stage.show();
         SKelegram.stage.setResizable(false);
-        SKelegram.client = new Client("93.39.191.67", 45678);
         
         // Checking if the client has connected to the server
         if(SKelegram.getClient().connect() != 0) {
