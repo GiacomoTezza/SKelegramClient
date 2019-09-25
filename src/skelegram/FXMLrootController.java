@@ -49,14 +49,9 @@ public class FXMLrootController implements Initializable {
                 getMsgbox().getChildren().remove(getMsgbox().getChildren().get(0));
             }
         }
-        System.out.println("INIZIO");
         getMsgbox().getChildren().clear();
-        System.out.println("PULITO");
         for (int i = 0; i < messages.size(); i++) {
-            System.out.println("AGGIUNGO " + i);
             getMsgbox().getChildren().add(messages.get(i));
-            System.out.println("AGGIUNTO " + i);
-//            SKelegram.getMessages().remove(SKelegram.getMessages().get(i));
         }
     }
     
