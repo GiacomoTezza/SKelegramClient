@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -22,7 +23,7 @@ public class FXMLrootController implements Initializable {
     String msg;
     String payload;
     int pLenght;
-    ArrayList messages;
+    ArrayList<Label> messages;
     
     @FXML
     private TextField input;
@@ -51,9 +52,9 @@ public class FXMLrootController implements Initializable {
         System.out.println("INIZIO");
         getMsgbox().getChildren().clear();
         System.out.println("PULITO");
-        for (int i = 0; i < SKelegram.getMessages().size(); i++) {
+        for (int i = 0; i < messages.size(); i++) {
             System.out.println("AGGIUNGO " + i);
-            getMsgbox().getChildren().add(SKelegram.getMessages().get(i));
+            getMsgbox().getChildren().add(messages.get(i));
             System.out.println("AGGIUNTO " + i);
 //            SKelegram.getMessages().remove(SKelegram.getMessages().get(i));
         }
@@ -62,6 +63,23 @@ public class FXMLrootController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SKelegram.setController(this);
+        this.messages = new ArrayList<>();
+        messages.add(new Label("Welcome to SKelegram chatroom:\n"));
+        
+        Task task = new Task() {
+            @Override public Void call() {
+                while (true) {
+                    String payload = SKelegram.getClient().receive();
+                    if (!"".equals(payload)) {
+                        messages.add(new Label(payload));
+                        update();
+                    }
+                }
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }    
 
     /**

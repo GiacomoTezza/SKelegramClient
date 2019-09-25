@@ -20,14 +20,12 @@ public class SKelegram extends Application {
     private static Scene rootScene;
     public static Stage stage;
     private static String nickname;
-    private static ArrayList<Label> messages;
     private static FXMLrootController rootController;
     private static Client client;
     
     @Override
     public void start(Stage stage) throws Exception {
         SKelegram.stage = stage;
-        SKelegram.messages = new ArrayList<>();
         
         Parent rootFXML = FXMLLoader.load(getClass().getResource("FXMLroot.fxml"));
         Parent openFXML = FXMLLoader.load(getClass().getResource("FXMLopen.fxml"));
@@ -42,22 +40,21 @@ public class SKelegram extends Application {
         SKelegram.stage.setResizable(false);
         SKelegram.client = new Client("93.39.191.67", 45678);  
         
-        SKelegram.addMessage("Welcome to SKelegram chatroom:\n");
         SKelegram.getClient().connect();
         
-        Task task = new Task() {
-            @Override public Void call() {
-                while (true) {
-                    String payload = SKelegram.getClient().receive();
-                    if (payload != "") {
-                        SKelegram.addMessage(payload);
-                    }
-                }
-            }
-        };
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
+//        Task task = new Task() {
+//            @Override public Void call() {
+//                while (true) {
+//                    String payload = SKelegram.getClient().receive();
+//                    if (!"".equals(payload)) {
+//                        SKelegram.addMessage(payload);
+//                    }
+//                }
+//            }
+//        };
+//        Thread thread = new Thread(task);
+//        thread.setDaemon(true);
+//        thread.start();
     }
 
     /**
@@ -67,10 +64,10 @@ public class SKelegram extends Application {
         launch(args);
     }
     
-    public static void addMessage(String payload) {
-        SKelegram.getMessages().add(new Label(payload));
-        SKelegram.getRootController().update();
-    }
+//    public static void addMessage(String payload) {
+//        SKelegram.getMessages().add(new Label(payload));
+//        SKelegram.getRootController().update();
+//    }
     
     /**
      * @return the nickname
@@ -85,13 +82,7 @@ public class SKelegram extends Application {
     public static void setNickname(String nickname) {
         SKelegram.nickname = nickname;
     }
-
-    /**
-     * @return the messages
-     */
-    public static ArrayList<Label> getMessages() {
-        return messages;
-    }
+    
 
     /**
      * @return the rootScene
