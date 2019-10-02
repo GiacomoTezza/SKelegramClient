@@ -27,7 +27,8 @@ public class SKelegram extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        SKelegram.client = new Client("93.39.191.67", 45678);
+//        SKelegram.client = new Client("93.39.191.67", 45678);
+        SKelegram.client = new Client("127.0.0.1", 45678);
         
         SKelegram.stage = stage;
         

@@ -21,6 +21,8 @@ public class Client{
     private DataOutputStream output;
     private BufferedReader input;
     
+    public ArrayList<String> incomingMessages;
+    
     /**
      * Constructor for localhost
      */
@@ -36,6 +38,7 @@ public class Client{
     public Client(String host, int port) {
         this.host = host;
         this.port = port;
+        this.incomingMessages = new ArrayList<>();
     }
     
     /**
@@ -72,18 +75,24 @@ public class Client{
      * Function that recive a string from the socket
      * @return the string recived
      */
-    public String receive() {
+    public void receive() {
         String k = "";
-        
+        char charro;
         try {
-            if (input.ready()){
-                k = input.readLine();
+            System.out.println("Bloccato");
+            
+            charro = (char)input.read();
+            while(charro != 'm'){
+                System.out.println(k);
+                k += charro;
+                charro = (char)input.read();
             }
+            incomingMessages.add(k);
+            
         } catch (IOException ex) {
             System.out.println(ex);
             close();
         }
-        return k;
     }
     
     /**

@@ -68,29 +68,40 @@ public class FXMLrootController implements Initializable {
         SKelegram.setController(this);
         this.messages = new ArrayList<>();
         
-        Task task = new Task() {
+        Task task1 = new Task() {
             
             @Override public Void call() {
                 messages.add("Welcome to SKelegram chatroom:\n");
                 update();
                 
                 while (true) {
-                    System.out.println("ricevo..");
-                    String payload = SKelegram.getClient().receive();
-                    if (payload != "") {
-                        System.out.println("Arrivato: " + payload);
-                        messages.add(payload);
+                    if (SKelegram.getClient().incomingMessages.size() > 0) {
+                        System.out.println("Arrivato: " + SKelegram.getClient().incomingMessages.get(0));
+                        messages.add(SKelegram.getClient().incomingMessages.get(0));
+                        SKelegram.getClient().incomingMessages.remove(0);
                         update();
                         System.out.println("Updatato");
-                    } else {
-                        System.out.println("NIENTE DI FATTO");
                     }
                 }
             }
         };
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
+        
+        Task task2 = new Task() {
+            
+            @Override public Void call() {
+                while (true) {
+                    System.out.println("ricevo..");
+                    SKelegram.getClient().receive();
+                }
+            }
+        };
+        
+        Thread thread1 = new Thread(task1);
+        Thread thread2 = new Thread(task2);
+        thread1.setDaemon(true);
+        thread2.setDaemon(true);
+        thread2.start();
+        thread1.start();
     }    
 
     /**
