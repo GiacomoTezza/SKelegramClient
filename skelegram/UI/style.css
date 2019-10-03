@@ -1,0 +1,39 @@
+.scroll-pane {
+    -fx-background-color:#333333;
+}
+
+#AnchorPane {
+    -fx-background-color:#444444;
+}
+
+#OpenPane {
+    -fx-background-color:#333333;
+}
+
+#Title {
+    -fx-font-size: 36pt;
+    -fx-font-family: "Monospace";
+    -fx-text-fill:white;
+    -fx-font-weight: bold;
+}
+
+#Subtitle {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Monospace";
+    -fx-text-fill:white;
+    -fx-font-weight: bold;
+}
+
+#Authors {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Monospace";
+    -fx-text-fill:white;
+}
+
+#Message {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Monospace";
+    -fx-text-fill:white;
+    -fx-pref-height:30px;
+    -fx-pref-width:320px;
+  }
