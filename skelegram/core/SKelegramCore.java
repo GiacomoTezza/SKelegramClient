@@ -44,10 +44,8 @@ public class SKelegramCore {
 
 					System.out.println("Registered Nickname : " + registeredNickname);
 
-					Platform.runLater(() -> {
-						skUIManager.showChat();
-					});
-
+					skUIManager.showChat();
+	
 					while (true) {
 						if (!skUIManager.getChatController().getToSendRawMessages().isEmpty()) {
 							
@@ -55,15 +53,19 @@ public class SKelegramCore {
 							skUIManager.getChatController().getToSendRawMessages().remove(0);
 
 							String elaboratedData = elaborateRawData(rawData);
-
-							skConnection.getToSendData().add(elaboratedData);
+							
+							System.out.println("Sending to Sender : " + elaboratedData);
+							
+							skConnection.addToSendData(elaboratedData);
 						}
 
 						if (!skConnection.getIncomingRawData().isEmpty()) {	
+							
 							skUIManager.getChatController().addMessage(skConnection.getIncomingRawData().get(0));
+							
 							skConnection.getIncomingRawData().remove(0);
 						}
-						Thread.sleep(10);
+						Thread.sleep(1);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

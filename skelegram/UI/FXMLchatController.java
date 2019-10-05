@@ -47,6 +47,7 @@ public class FXMLchatController implements Initializable {
     
     public void addMessage(String message) {
     	Platform.runLater(()->{
+    		System.out.println("Adding message : " + message);
     		msgbox.getChildren().add(new Label(message));
     	});
     	

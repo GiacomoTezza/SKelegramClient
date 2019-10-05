@@ -1,6 +1,7 @@
 package skelegram.core;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,9 +18,9 @@ public class SKelegramConnection {
 	private Socket clientSocket;
 	private String host;
 	private int port;
-	
+
 	Thread senderThread;
-	Thread receiverThread;	
+	Thread receiverThread;
 
 	private ArrayList<String> incomingRawData;
 	private ArrayList<String> toSendData;
@@ -42,29 +43,34 @@ public class SKelegramConnection {
 
 		return true;
 	}
-	
+
 	public void startReceiver() {
 		Task receiverTask = new Task() {
 			@Override
 			public Void call() {
 				try {
-					BufferedReader clientSocketInput = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-					String rawInput;
+					// BufferedReader clientSocketInput = new BufferedReader(new
+					// InputStreamReader(clientSocket.getInputStream()));
+					DataInputStream clientSocketInput = new DataInputStream(clientSocket.getInputStream());
+					String rawInput = "";
 					while (true) {
-						if (clientSocketInput.ready()) {
-							rawInput = clientSocketInput.readLine();
+						if (!rawInput.contains("&(end)&")) {
+							rawInput += (char) clientSocketInput.readByte();
+						} else if (rawInput.contains("&(end)&")) {
 							System.out.println("Raw data from server : " + rawInput);
-							incomingRawData.add(0,rawInput);
+							incomingRawData.add(0, rawInput);
+							rawInput = "";
 						}
+						Thread.sleep(1);
 					}
 				} catch (Exception e) {
 					System.out.println("Cannot start Receiver!");
 				}
-		
+
 				return null;
 			}
 		};
-		
+
 		receiverThread = new Thread(receiverTask);
 		receiverThread.setDaemon(true);
 		receiverThread.start();
@@ -82,18 +88,20 @@ public class SKelegramConnection {
 							String toSend = toSendData.get(0);
 							clientSocketWriter.writeBytes(toSend);
 							toSendData.remove(0);
+							clientSocketWriter.flush();
+							System.out.println("Sending connection : " + toSend);
 						}
-						Thread.sleep(10);
+						Thread.sleep(1);
 					}
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-		
+
 				return null;
 			}
 		};
-		
+
 		senderThread = new Thread(senderTask);
 		senderThread.setDaemon(true);
 		senderThread.start();
@@ -103,7 +111,7 @@ public class SKelegramConnection {
 		return incomingRawData;
 	}
 
-	public ArrayList<String> getToSendData() {
-		return toSendData;
+	public void addToSendData(String data) {
+		toSendData.add(data);
 	}
 }

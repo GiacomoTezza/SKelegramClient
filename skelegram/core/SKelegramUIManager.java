@@ -58,41 +58,6 @@ public class SKelegramUIManager {
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("/skelegram/media/icon.png")));
 
 		stage.show();
-
-		// UI TASKS
-		// This task wait for the nickname input ...
-//		Task mainUITask = new Task() {
-//			@Override
-//			public Void call() {
-//				
-//				while (openController.getNickname() == "") {
-//					try {
-//						Thread.sleep(10);
-//					} catch (InterruptedException e) {
-//					}
-//				}
-//
-//				nickname = openController.getNickname();
-//				
-//				Platform.runLater(()->{
-//					showChat();
-//				});
-//				
-//				while (true) {
-//					if (!messages.isEmpty()) {
-//						chatController.addMessage(messages.get(0));
-//						messages.remove(0);
-//					}
-//				}
-//
-//
-//
-//			}
-//		};
-//
-//		mainUIThread = new Thread(mainUITask);
-//		mainUIThread.setDaemon(true);
-//		mainUIThread.start();
 	}
 
 	public FXMLchatController getChatController() {
@@ -112,7 +77,9 @@ public class SKelegramUIManager {
 	}
 
 	public void showChat() {
-		stage.setScene(chatScene);
+		Platform.runLater(()->{
+			stage.setScene(chatScene);
+		});
 	}
 
 }
