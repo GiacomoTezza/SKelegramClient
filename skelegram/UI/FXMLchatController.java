@@ -38,7 +38,8 @@ public class FXMLchatController implements Initializable {
     void handleTextField(KeyEvent event) throws IOException {
     	String msg;
     	
-        if (event.getCode() == ENTER) {
+       
+    	if (event.getCode() == ENTER) {
             msg = this.input.getText();
             this.input.setText("");
             getToSendRawMessages().add(msg);

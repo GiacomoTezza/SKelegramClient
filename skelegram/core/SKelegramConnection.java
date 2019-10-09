@@ -53,20 +53,21 @@ public class SKelegramConnection {
 					// InputStreamReader(clientSocket.getInputStream()));
 					DataInputStream clientSocketInput = new DataInputStream(clientSocket.getInputStream());
 					String rawInput = "";
+
 					while (true) {
+
 						if (!rawInput.contains("&(end)&")) {
 							rawInput += (char) clientSocketInput.readByte();
+
 						} else if (rawInput.contains("&(end)&")) {
 							System.out.println("Raw data from server : " + rawInput);
 							incomingRawData.add(0, rawInput);
 							rawInput = "";
 						}
-						Thread.sleep(1);
 					}
 				} catch (Exception e) {
-					System.out.println("Cannot start Receiver!");
+					e.printStackTrace();
 				}
-
 				return null;
 			}
 		};
@@ -86,10 +87,10 @@ public class SKelegramConnection {
 					while (true) {
 						if (!toSendData.isEmpty()) {
 							String toSend = toSendData.get(0);
-							clientSocketWriter.writeBytes(toSend);
+							clientSocketWriter.writeBytes(toSend + '\n');
 							toSendData.remove(0);
 							clientSocketWriter.flush();
-							System.out.println("Sending connection : " + toSend);
+							System.out.println("Sending : " + toSend);
 						}
 						Thread.sleep(1);
 					}

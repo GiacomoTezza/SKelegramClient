@@ -58,8 +58,6 @@ public class SKelegramCore {
 
 							String elaboratedData = elaborateRawData(rawData);
 							
-							System.out.println("Sending to Sender : " + elaboratedData);
-							
 							skConnection.addToSendData(elaboratedData);
 						}
 
