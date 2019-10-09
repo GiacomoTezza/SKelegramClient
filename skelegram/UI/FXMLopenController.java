@@ -32,7 +32,7 @@ public class FXMLopenController implements Initializable {
         }
     }
     
-    void showError() {
+    public void showError() {
         errorlabel.setVisible(true);
         nickInput.setVisible(false);
     }

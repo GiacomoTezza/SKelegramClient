@@ -21,11 +21,15 @@ public class SKelegramCore {
 	}
 
 	public void initialize() {
-		skConnection.connect("localhost", 45678);
+		skUIManager.initialize();
+		
+		if(!skConnection.connect("localhost", 45678)) {
+			skUIManager.getOpenController().showError();
+			return;	
+		}
+		
 		skConnection.startReceiver();
 		skConnection.startSender();
-
-		skUIManager.initialize();
 
 		Task coreTask = new Task() {
 			@Override

@@ -37,7 +37,7 @@ public class SKelegramConnection {
 		try {
 			clientSocket = new Socket(this.host, this.port);
 		} catch (IOException e) {
-			System.out.println("Cannot conect to the server !");
+			System.out.println("Cannot connect to the server !");
 			return false;
 		}
 
